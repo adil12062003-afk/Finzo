@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.merahisabpro"
+    namespace = "com.merahisabpro.app"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.merahisabpro"
+        applicationId = "com.merahisabpro.app"
         minSdk = 23
         targetSdk = 35
         versionCode = 1
