@@ -20,7 +20,6 @@ body{background:radial-gradient(ellipse at 50% -10%,#172943 0,#0b1220 50%);color
 @media(max-width:390px){.app{padding-left:12px;padding-right:12px}.brand h1{font-size:19px}.logo{width:56px;height:56px}.hero{padding:20px}.hero .total{font-size:36px}.stat{padding:14px}.stat .value{font-size:20px}.actions.quick-actions{gap:6px}.quick-btn{font-size:11px;min-height:112px}.quick-btn span{font-size:24px}}
 @media(min-width:700px){body{padding-bottom:0}.app{max-width:920px}.tabs{position:static;border:1px solid #253149;border-radius:18px;margin-bottom:14px;padding:8px;display:flex}.tab{flex:1}.actions.quick-actions{max-width:520px}}
 @media print{body{background:white;color:black;padding-bottom:0}.tabs{display:none!important}.stat,.panel,.tx,.customer{background:white;color:black}}
-
 </style>
 </head>
 <body>
@@ -37,21 +36,52 @@ body{background:radial-gradient(ellipse at 50% -10%,#172943 0,#0b1220 50%);color
 <div class="tabs"><button class="tab active" data-tab="transactions" onclick="setTab('transactions')"><span>⌂</span>Home</button><button class="tab" data-tab="customers" onclick="setTab('customers')"><span>⇄</span>Hisab</button><button class="tab" data-tab="reports" onclick="setTab('reports')"><span>▤</span>Report</button><button class="tab" data-tab="backup" onclick="setTab('backup')"><span>💰</span>Backup</button></div>
 <section id="transactionsView" class="panel"><div class="section-title"><h2>Recent Transactions</h2><button class="btn small light" onclick="openForm('income')">Sab dekhein</button></div><div class="filters"><input id="search" placeholder="Naam, note ya amount search karein" oninput="renderTransactions()"><select id="typeFilter" onchange="renderTransactions()"><option value="all">Sabhi types</option><option value="income">Income</option><option value="expense">Expense</option><option value="receive">Udhaar lena</option><option value="pay">Udhaar dena</option></select><select id="statusFilter" onchange="renderTransactions()"><option value="all">Sabhi status</option><option value="pending">Pending</option><option value="paid">Paid</option></select></div><div id="txList" class="list"></div></section>
 <section id="customersView" class="panel hide"><div class="section-title"><h2>Customer-wise hisaab</h2><button class="btn small" onclick="openForm('receive')">＋ Entry</button></div><p class="muted" style="font-size:13px;margin-top:0">Customer ke naam par tap karke uska poora hisaab dekhein.</p><div id="customerList" class="customer-list"></div></section>
-<section id="reportsView" class="panel hide"><div class="section-title"><h2>Reports</h2><button class="btn small light" onclick="if(window.AndroidApp){window.AndroidApp.printPage()}else{window.print()}">Print / PDF</button></div><div id="reportContent"></div></section>
+<section id="reportsView" class="panel hide"><div class="section-title"><h2>Reports</h2><button class="btn small light" onclick="if(window.AndroidApp){window.AndroidApp.printPage()}else{window.print()}">Print / PDF</button></div><div id="reportContent"><p class="muted">Reports yahan show hongi.</p></div></section>
 <section id="backupView" class="panel hide"><div class="section-title"><h2>Backup & restore</h2></div><div class="notice">Abhi data isi device par save hota hai. Phone/browser ka data clear karne se pehle backup download kar lein. Google cloud sync abhi connected nahi hai.</div><div class="backup-row"><button class="btn" onclick="exportJSON()">Download backup (JSON)</button><button class="btn secondary" onclick="exportCSV()">Export Excel/CSV</button><button class="btn light" onclick="document.getElementById('restoreFile').click()">Restore backup</button><input id="restoreFile" class="hide" type="file" accept=".json,application/json" onchange="restoreJSON(event)"></div><div class="summary-row"><span>Saved entries</span><b id="entryCount">0</b></div><div class="summary-row"><span>Storage</span><b>Is device par</b></div></section>
 <div class="foot">Mera Hisab Pro · Version 1.0 · Aapka data abhi isi browser mein save hota hai.</div>
 </div>
 <div id="modal" class="modal" onclick="if(event.target===this)closeForm()"><div class="modal-box"><div class="modal-head"><h2 id="formTitle">New entry</h2><button class="close" onclick="closeForm()">×</button></div><form id="entryForm" onsubmit="saveEntry(event)"><input type="hidden" id="entryId"><div class="field"><label>Entry type</label><select id="fType" required onchange="updateFormLabels()"><option value="income">Income</option><option value="expense">Expense</option><option value="receive">Udhaar lena (mujhe milna hai)</option><option value="pay">Udhaar dena (mujhe dena hai)</option></select></div><div class="form-grid"><div class="field"><label id="nameLabel">Naam / customer</label><input id="fName" placeholder="Jaise: Rahul" maxlength="100"></div><div class="field"><label>Amount (₹)</label><input id="fAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div><div class="field"><label>Date</label><input id="fDate" type="date" required></div><div class="field" id="dueWrap"><label>Due date (optional)</label><input id="fDue" type="date"></div><div class="field full"><label>Note / details</label><textarea id="fNote" rows="2" placeholder="Kis cheez ka hisaab?" maxlength="500"></textarea></div><div class="field full" id="statusWrap"><label>Payment status</label><select id="fStatus"><option value="pending">Pending</option><option value="paid">Paid / Complete</option></select></div></div><div class="actions" style="margin-top:6px;margin-bottom:0"><button class="btn" type="submit">Save entry</button><button class="btn light" type="button" onclick="closeForm()">Cancel</button></div></form></div></div>
 <div id="detailModal" class="modal" onclick="if(event.target===this)closeDetail()"><div class="modal-box"><div class="modal-head"><h2 id="detailTitle">Customer</h2><button class="close" onclick="closeDetail()">×</button></div><div id="detailContent"></div></div></div><div id="toast" class="toast"></div>
+
 <script>
-const KEY='meraHisabPro_v2';let entries=[];let currentTab='transactions';let toastTimer;
-const $=id=>document.getElementById(id);const today=()=>{let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const KEY='meraHisabPro_v2';
+let entries=[];
+let currentTab='transactions';
+let toastTimer;
+
+const $=id=>document.getElementById(id);
+const today=()=>{let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
 const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateFmt=s=>s?new Date(s+'T12:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
-function load(){try{entries=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(entries))entries=[]}catch{entries=[]} $('todayPill').textContent=dateFmt(today());renderAll()}
-function persist(){localStorage.setItem(KEY,JSON.stringify(entries));renderAll()}
+
+function load(){
+    try{entries=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(entries))entries=[]}catch{entries=[]}
+    $('todayPill').textContent=dateFmt(today());
+    renderAll();
+}
+
+function persist(){
+    localStorage.setItem(KEY,JSON.stringify(entries));
+    renderAll();
+}
+
 function sum(arr,fn){return arr.reduce((a,x)=>a+fn(x),0)}
-function renderAll(){const inc=sum(entries.filter(e=>e.type==='income'),e=>+e.amount),exp=sum(entries.filter(e=>e.type==='expense'),e=>+e.amount),rec=sum(entries.filter(e=>e.type==='receive'&&e.status!=='paid'),e=>+e.amount),pay=sum(entries.filter(e=>e.type==='pay'&&e.status!=='paid'),e=>+e.amount),t=today();$('balance').textContent=money(inc-exp);$('heroIncome').textContent=money(inc);$('heroExpense').textContent=money(exp);$('heroDue').textContent=money(rec+pay);$('todayIncome').textContent=money(sum(entries.filter(e=>e.type==='income'&&e.date===t),e=>+e.amount));$('todayExpense').textContent=money(sum(entries.filter(e=>e.type==='expense'&&e.date===t),e=>+e.amount));$('receivable').textContent=money(rec);$('payable').textContent=money(pay);$('entryCount').textContent=entries.length;renderTransactions();renderCustomers();renderReports()}
-function typeLabel(t){return {income:'Income',expense:'Expense',receive:'Udhaar lena',pay:'Udhaar dena'}[t]||t}
-funct
+
+function renderAll(){
+    const inc=sum(entries.filter(e=>e.type==='income'),e=>+e.amount),
+          exp=sum(entries.filter(e=>e.type==='expense'),e=>+e.amount),
+          rec=sum(entries.filter(e=>e.type==='receive'&&e.status!=='paid'),e=>+e.amount),
+          pay=sum(entries.filter(e=>e.type==='pay'&&e.status!=='paid'),e=>+e.amount),
+          t=today();
+          
+    $('balance').textContent=money(inc-exp);
+    $('heroIncome').textContent=money(inc);
+    $('heroExpense').textContent=money(exp);
+    $('heroDue').textContent=money(rec+pay);
+    
+    $('todayIncome').textContent=money(sum(entries.filter(e=>e.type==='income'&&e.date===t),e=>+e.amount));
+    $('todayExpense').textContent=money(sum(entries.filter(e=>e.type==='expense'&&e.date===t),e=>+e.amount));
+    $('receivable').textContent=money(rec);
+    $('payable').textContent=money(pay);
+    $('entryCount').textCon
