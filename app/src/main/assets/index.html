@@ -1,87 +1,448 @@
 <!doctype html>
 <html lang="hi">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1220"><title>Mera Hisab Pro</title>
-<style>
-:root{--bg:#f3f6f8;--card:#fff;--ink:#14212b;--muted:#64748b;--line:#e2e8f0;--brand:#0f766e;--brand2:#115e59;--red:#dc2626;--green:#15803d;--amber:#b45309}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:1080px;margin:auto;padding:16px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 18px}.brand{display:flex;gap:11px;align-items:center}.logo{width:44px;height:44px;border-radius:14px;background:var(--brand);color:white;display:grid;place-items:center;font-size:23px;font-weight:800}.brand h1{font-size:21px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.pill{font-size:12px;border:1px solid var(--line);background:white;padding:7px 10px;border-radius:999px;color:var(--muted)}.hero{background:linear-gradient(125deg,#115e59,#0f766e 55%,#14b8a6);color:white;border-radius:22px;padding:22px;margin-bottom:16px;box-shadow:0 10px 24px #0f766e20}.hero small{opacity:.85}.hero .total{font-size:32px;font-weight:800;margin:4px 0 14px;letter-spacing:-.7px}.hero-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.hero-stat{background:#ffffff19;border:1px solid #ffffff26;border-radius:14px;padding:11px}.hero-stat span{font-size:12px;opacity:.88;display:block}.hero-stat b{display:block;font-size:16px;margin-top:4px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.stat,.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px}.stat .label{color:var(--muted);font-size:12px}.stat .value{font-size:21px;font-weight:750;margin-top:5px;overflow-wrap:anywhere}.stat .sub{font-size:12px;color:var(--muted);margin-top:4px}.income{color:var(--green)}.expense{color:var(--red)}.due{color:var(--amber)}.actions{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}.btn{border:0;border-radius:12px;padding:11px 14px;font-weight:650;background:var(--brand);color:white}.btn:hover{background:var(--brand2)}.btn.secondary{background:#e6f4f1;color:#115e59}.btn.light{background:white;color:var(--ink);border:1px solid var(--line)}.btn.danger{background:#fee2e2;color:#991b1b}.btn.small{padding:7px 10px;font-size:12px;border-radius:9px}.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 12px}.section-title h2{font-size:17px;margin:0}.tabs{display:flex;gap:6px;overflow:auto;margin-bottom:14px;padding-bottom:2px}.tab{white-space:nowrap;border:1px solid var(--line);background:white;color:var(--muted);border-radius:999px;padding:8px 13px}.tab.active{background:#d9f3ee;color:#115e59;border-color:#a7e1d6;font-weight:700}.filters{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:9px;margin-bottom:12px}.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}.field label{font-size:12px;color:var(--muted);font-weight:650}.field input,.field select,.field textarea,.filters input,.filters select{width:100%;min-width:0;border:1px solid #cbd5e1;border-radius:11px;padding:10px 11px;background:white;color:var(--ink);outline:none}.field input:focus,.field select:focus,.field textarea:focus,.filters input:focus,.filters select:focus{border-color:var(--brand);box-shadow:0 0 0 3px #0f766e18}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 12px}.full{grid-column:1/-1}.list{display:flex;flex-direction:column;gap:9px}.tx{display:flex;align-items:center;gap:12px;padding:13px;border:1px solid var(--line);border-radius:14px;background:white}.tx-icon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#e6f4f1;font-size:20px;flex-shrink:0}.tx-main{min-width:0;flex:1}.tx-title{font-weight:700;overflow-wrap:anywhere}.tx-meta{font-size:12px;color:var(--muted);margin-top:3px;overflow-wrap:anywhere}.tx-right{text-align:right;flex-shrink:0}.tx-amount{font-weight:800;font-size:15px}.badge{display:inline-block;font-size:11px;padding:3px 7px;border-radius:999px;margin-top:4px}.badge.pending{background:#fef3c7;color:#92400e}.badge.paid{background:#dcfce7;color:#166534}.empty{text-align:center;padding:30px 12px;color:var(--muted)}.empty b{display:block;color:var(--ink);margin-bottom:5px}.bottom-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;margin-top:8px}.muted{color:var(--muted)}.customer-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.customer{border:1px solid var(--line);border-radius:14px;padding:14px;background:white}.customer h3{margin:0 0 4px;font-size:15px}.customer .amount{font-size:18px;font-weight:800}.notice{background:#fff7ed;border:1px solid #fed7aa;color:#9a3412;padding:12px;border-radius:12px;font-size:13px;margin-bottom:14px}.foot{text-align:center;color:var(--muted);font-size:11px;padding:20px 8px}.modal{position:fixed;inset:0;background:#0f172a88;display:none;align-items:flex-end;justify-content:center;padding:0;z-index:10}.modal.show{display:flex}.modal-box{width:min(620px,100%);max-height:92vh;overflow:auto;background:white;border-radius:22px 22px 0 0;padding:20px 18px 26px;box-shadow:0 -10px 40px #0002}.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.modal-head h2{font-size:19px;margin:0}.close{border:0;background:#f1f5f9;border-radius:50%;width:36px;height:36px;font-size:20px}.hide{display:none!important}.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#14212b;color:white;border-radius:12px;padding:11px 16px;z-index:30;display:none;max-width:90%;box-shadow:0 8px 25px #0003}.toast.show{display:block}.backup-row{display:flex;flex-wrap:wrap;gap:8px}.summary-row{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}@media(min-width:700px){.modal{align-items:center;padding:18px}.modal-box{border-radius:22px;padding:22px}.app{padding:24px}.hero{padding:26px}.tx{padding:14px}}@media(max-width:650px){.grid{grid-template-columns:repeat(2,1fr);gap:9px}.stat{padding:13px}.stat .value{font-size:19px}.hero-grid{grid-template-columns:1fr 1fr}.hero-grid .hero-stat:last-child{grid-column:1/-1}.filters{grid-template-columns:1fr 1fr}.filters input{grid-column:1/-1}.customer-list{grid-template-columns:1fr}.top{align-items:flex-start}.pill{max-width:130px;text-align:center}.tx{align-items:flex-start}.tx-icon{width:36px;height:36px}.tx-right{max-width:115px}.tx-amount{font-size:14px}}@media print{body{background:white}.actions,.tabs,.filters,.bottom-actions,.pill,.foot,.btn{display:none!important}.app{max-width:none;padding:0}.panel,.stat,.hero{box-shadow:none;break-inside:avoid}}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1220">
+<title>Mera Hisab Pro</title>
 
-/* Premium dark dashboard inspired by the requested reference */
-:root{--bg:#0b1220;--card:#111d31;--ink:#edf4ff;--muted:#94a3b8;--line:#24324a;--brand:#2488ff;--brand2:#1268c7;--red:#fb7185;--green:#34d399;--amber:#fbbf24}
-body{background:radial-gradient(ellipse at 50% -10%,#172943 0,#0b1220 50%);color:var(--ink);padding-bottom:94px}
-.app{max-width:560px;padding:18px 16px 28px}
-.top{margin:8px 0 20px;align-items:center}.brand{gap:14px}.logo{width:64px;height:64px;border-radius:18px;background:linear-gradient(135deg,#278cff,#27d3b5);color:#071322;font-size:31px;box-shadow:0 8px 24px #159bd733}.brand h1{font-size:22px;font-weight:800;letter-spacing:-.5px}.brand p{font-size:13px;color:#9aabc4}.settings-btn{width:58px;height:58px;border:1px solid #293a56;background:#17243a;color:#a9c4e9;border-radius:18px;font-size:24px}
-.pill{background:#152238;border-color:#2a3b56;color:#a7b6ca}.hero{background:linear-gradient(125deg,#173c5b,#164052 58%,#10483f);border:1px solid #2b6072;border-radius:25px;padding:24px;margin-bottom:18px;box-shadow:0 15px 34px #0002}.hero small{font-size:14px;color:#c0d8e8;opacity:1}.hero .total{font-size:40px;margin:12px 0 20px;letter-spacing:-1px}.hero-grid{gap:8px}.hero-stat{background:transparent;border:0;padding:5px 0}.hero-stat span{font-size:13px;color:#c2d3e3}.hero-stat b{font-size:17px;color:#f5f8ff}
-.grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:26px}.stat,.panel{background:linear-gradient(145deg,#15233a,#111c2e);border:1px solid #26354d;border-radius:23px;box-shadow:0 8px 20px #0001}.stat{padding:18px}.stat .label{font-size:13px;color:#9aaac1}.stat .value{font-size:23px}.stat .sub{font-size:12px;color:#8e9db3}.income{color:#34d399}.expense{color:#fb7185}.due{color:#fbbf24}
-.quick-head{display:flex;align-items:center;justify-content:space-between;margin:0 2px 12px}.quick-head h2{font-size:19px;margin:0}.quick-head span{font-size:12px;color:#9aaac1}.actions.quick-actions{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-bottom:28px}.quick-btn{min-width:0;min-height:122px;border:1px solid #293850;border-radius:20px;background:linear-gradient(145deg,#142239,#101a2c);color:#dce6f6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:12px 5px;font-size:13px}.quick-btn span{font-size:27px}.quick-btn:active{transform:scale(.98);border-color:#3d77ad}
-.tabs{position:fixed;z-index:8;left:0;right:0;bottom:0;margin:0;padding:10px max(12px,env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom));background:#0b1220f5;border-top:1px solid #253149;display:grid;grid-template-columns:repeat(4,1fr);gap:5px;backdrop-filter:blur(14px)}.tab{border:0;background:transparent;color:#91a1b9;border-radius:15px;padding:8px 3px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:4px}.tab span{font-size:22px;line-height:1.1}.tab.active{background:#1a2d49;color:#8dbbff;border:0;font-weight:700}
-.panel{padding:18px;margin-bottom:16px}.section-title h2{font-size:18px}.btn{background:#1e7de0;color:white}.btn:hover{background:#1768bd}.btn.secondary{background:#153e47;color:#83e4d3}.btn.light{background:#17243a;color:#e4edfb;border-color:#2c3b55}.filters input,.filters select,.field input,.field select,.field textarea{background:#0c1627;color:#eaf1fc;border-color:#2b3b55}.field label{color:#a7b7ce}.tx{background:#142239;border-color:#293850}.tx-icon{background:#1d334b}.tx-meta{color:#9baec6}.badge.pending{background:#493a20;color:#fbd38d}.badge.paid{background:#123d33;color:#7ce9bf}.empty{color:#99a9c0}.empty b{color:#e6eefb}.customer{background:#142239;border-color:#293850}.modal-box{background:#111d31;color:#edf4ff}.close{background:#24334a;color:#f1f5f9}.notice{background:#38291c;border-color:#62442b;color:#f9c995}.summary-row{border-color:#293850}.foot{color:#8496b1}.toast{background:#e4edfb;color:#0b1220}
-@media(max-width:390px){.app{padding-left:12px;padding-right:12px}.brand h1{font-size:19px}.logo{width:56px;height:56px}.hero{padding:20px}.hero .total{font-size:36px}.stat{padding:14px}.stat .value{font-size:20px}.actions.quick-actions{gap:6px}.quick-btn{font-size:11px;min-height:112px}.quick-btn span{font-size:24px}}
-@media(min-width:700px){body{padding-bottom:0}.app{max-width:920px}.tabs{position:static;border:1px solid #253149;border-radius:18px;margin-bottom:14px;padding:8px;display:flex}.tab{flex:1}.actions.quick-actions{max-width:520px}}
-@media print{body{background:white;color:black;padding-bottom:0}.tabs{display:none!important}.stat,.panel,.tx,.customer{background:white;color:black}}
+<style>
+:root {
+  --bg:#0b1220; --card:#111d31; --ink:#edf4ff;
+  --muted:#94a3b8; --line:#26354d; --blue:#2488ff;
+  --green:#34d399; --red:#fb7185; --amber:#fbbf24;
+}
+* { box-sizing:border-box }
+body {
+  margin:0; background:var(--bg); color:var(--ink);
+  font:15px/1.5 system-ui,Arial,sans-serif;
+  padding-bottom:85px;
+}
+button,input,select,textarea { font:inherit }
+button { cursor:pointer }
+.app { max-width:900px; margin:auto; padding:16px }
+.top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:8px 0 20px }
+.brand { display:flex; align-items:center; gap:12px }
+.logo {
+  width:55px;height:55px;border-radius:17px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#278cff,#27d3b5);
+  color:#071322;font-size:30px;font-weight:900;
+}
+h1 { font-size:21px;margin:0 }
+.brand p { margin:2px 0 0;color:var(--muted);font-size:12px }
+.btn {
+  border:0;border-radius:12px;padding:11px 14px;
+  background:var(--blue);color:white;font-weight:700;
+}
+.btn.secondary { background:#153e47;color:#83e4d3 }
+.btn.light { background:#17243a;color:var(--ink);border:1px solid var(--line) }
+.btn.danger { background:#49202b;color:#ffb6c1 }
+.btn.small { padding:6px 9px;font-size:12px }
+.hero {
+  padding:23px;border-radius:23px;margin-bottom:15px;
+  background:linear-gradient(125deg,#173c5b,#164052,#10483f);
+  border:1px solid #2b6072;
+}
+.hero small { color:#c0d8e8 }
+.total { font-size:36px;font-weight:850;margin:8px 0 15px;overflow-wrap:anywhere }
+.hero-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px }
+.hero-stat span { display:block;color:#c2d3e3;font-size:12px }
+.hero-stat b { font-size:16px }
+.grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-bottom:22px }
+.stat,.panel {
+  padding:16px;border-radius:19px;
+  background:linear-gradient(145deg,#15233a,#111c2e);
+  border:1px solid var(--line);margin-bottom:14px;
+}
+.label { color:var(--muted);font-size:12px }
+.value { font-size:21px;font-weight:800;margin-top:5px;overflow-wrap:anywhere }
+.income { color:var(--green) }
+.expense { color:var(--red) }
+.due { color:var(--amber) }
+.quick-head,.section-title { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px }
+.quick-head h2,.section-title h2 { margin:0;font-size:18px }
+.muted { color:var(--muted) }
+.quick-actions { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:22px }
+.quick-btn {
+  min-width:0;min-height:100px;padding:10px 3px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  color:var(--ink);background:#142239;border:1px solid #293850;
+  border-radius:17px;font-size:12px;
+}
+.quick-btn span { font-size:25px }
+.tabs {
+  position:fixed;z-index:8;bottom:0;left:0;right:0;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:4px;
+  padding:9px 10px calc(9px + env(safe-area-inset-bottom));
+  background:#0b1220f5;border-top:1px solid var(--line);
+}
+.tab {
+  border:0;border-radius:12px;background:transparent;color:var(--muted);
+  padding:8px 2px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+.tab span { font-size:21px }
+.tab.active { background:#1a2d49;color:#8dbbff;font-weight:800 }
+.filters { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px }
+.filters input { grid-column:1/-1 }
+input,select,textarea {
+  width:100%;min-width:0;padding:11px;
+  color:var(--ink);background:#0c1627;
+  border:1px solid #2b3b55;border-radius:10px;
+}
+.field { display:flex;flex-direction:column;gap:5px;margin-bottom:12px }
+.field label { color:#a7b7ce;font-size:12px;font-weight:700 }
+.form-grid { display:grid;grid-template-columns:1fr 1fr;gap:0 10px }
+.full { grid-column:1/-1 }
+.list { display:flex;flex-direction:column;gap:9px }
+.tx {
+  display:flex;align-items:flex-start;gap:10px;
+  padding:12px;border:1px solid #293850;border-radius:14px;background:#142239;
+}
+.tx-icon { font-size:21px;background:#1d334b;border-radius:12px;padding:7px }
+.tx-main { flex:1;min-width:0 }
+.tx-title { font-weight:750;overflow-wrap:anywhere }
+.tx-meta { font-size:12px;color:var(--muted);overflow-wrap:anywhere }
+.tx-right { text-align:right;max-width:45%;overflow-wrap:anywhere }
+.tx-amount { font-weight:850 }
+.bottom-actions { display:flex;justify-content:flex-end;flex-wrap:wrap;gap:5px;margin-top:7px }
+.badge { display:inline-block;padding:3px 7px;border-radius:20px;font-size:11px;margin-top:4px }
+.pending { background:#493a20;color:#fbd38d }
+.paid { background:#123d33;color:#7ce9bf }
+.empty { text-align:center;padding:24px 10px;color:var(--muted) }
+.customer-list { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px }
+.customer { border:1px solid var(--line);border-radius:13px;padding:13px;background:#142239 }
+.customer h3 { margin:0 0 5px;font-size:15px;overflow-wrap:anywhere }
+.summary-row { display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line) }
+.notice { background:#38291c;color:#f9c995;padding:12px;border-radius:12px;font-size:13px;margin-bottom:12px }
+.backup-row { display:flex;flex-wrap:wrap;gap:8px }
+.hide { display:none!important }
+.modal { position:fixed;inset:0;z-index:20;display:none;align-items:flex-end;justify-content:center;background:#0009 }
+.modal.show { display:flex }
+.modal-box { width:100%;max-width:600px;max-height:92vh;overflow:auto;background:#111d31;padding:19px;border-radius:22px 22px 0 0 }
+.modal-head { display:flex;justify-content:space-between;align-items:center;margin-bottom:15px }
+.modal-head h2 { font-size:19px;margin:0 }
+.close { background:#24334a;color:white;border:0;border-radius:50%;width:36px;height:36px;font-size:21px }
+.toast { position:fixed;z-index:40;bottom:90px;left:50%;transform:translateX(-50%);display:none;background:white;color:#111;padding:12px 17px;border-radius:12px;max-width:90% }
+.toast.show { display:block }
+.foot { text-align:center;color:var(--muted);font-size:11px;padding:18px }
+@media(min-width:700px) {
+  .modal { align-items:center;padding:20px }
+  .modal-box { border-radius:20px }
+  .tabs { position:static;border:1px solid var(--line);border-radius:15px;margin-bottom:15px }
+  .app { padding:23px }
+}
+@media(max-width:380px) {
+  .app { padding:11px }
+  .quick-actions { gap:5px }
+  .quick-btn { font-size:11px }
+  .total { font-size:31px }
+  .tx { gap:7px;padding:9px }
+}
+@media print {
+  body { background:white;color:black;padding:0 }
+  .tabs,.quick-actions,.quick-head,.btn,.filters,.bottom-actions,.foot { display:none!important }
+  .panel,.stat,.customer,.tx { background:white;color:black;break-inside:avoid }
+}
 </style>
 </head>
+
 <body>
 <div class="app">
-<header class="top"><div class="brand"><div class="logo">₹</div><div><h1>Mera Hisab Pro</h1><p>Apne paise ka poora hisaab</p></div></div><button class="settings-btn" onclick="setTab('backup')" aria-label="Settings">⚙</button><span class="hide" id="todayPill">Aaj ka hisaab</span></header>
-<section class="hero"><small>Aapka Net Balance</small><div class="total" id="balance">₹0.00</div><div class="hero-grid"><div class="hero-stat"><span>Aamdani</span><b id="heroIncome">₹0.00</b></div><div class="hero-stat"><span>Kharcha</span><b id="heroExpense">₹0.00</b></div><div class="hero-stat"><span>Pending Udhaar</span><b id="heroDue">₹0.00</b></div></div></section>
-<section class="grid">
-<div class="stat"><div class="label">Aaj ki income</div><div class="value income" id="todayIncome">₹0</div><div class="sub">Aaj receive hua</div></div>
-<div class="stat"><div class="label">Aaj ka kharcha</div><div class="value expense" id="todayExpense">₹0</div><div class="sub">Aaj spend hua</div></div>
-<div class="stat"><div class="label">Mujhe lene hain</div><div class="value due" id="receivable">₹0</div><div class="sub">Pending receive</div></div>
-<div class="stat"><div class="label">Mujhe dene hain</div><div class="value due" id="payable">₹0</div><div class="sub">Pending pay</div></div>
+<header class="top">
+  <div class="brand">
+    <div class="logo">₹</div>
+    <div><h1>Mera Hisab Pro</h1><p>Apne paise ka poora hisaab</p></div>
+  </div>
+  <button class="btn light" onclick="setTab('backup')">⚙</button>
+</header>
+
+<section class="hero">
+  <small>Aapka Net Balance</small>
+  <div class="total" id="balance">₹0</div>
+  <div class="hero-grid">
+    <div class="hero-stat"><span>Aamdani</span><b id="heroIncome">₹0</b></div>
+    <div class="hero-stat"><span>Kharcha</span><b id="heroExpense">₹0</b></div>
+    <div class="hero-stat"><span>Pending Udhaar</span><b id="heroDue">₹0</b></div>
+  </div>
 </section>
-<div class="quick-head"><h2>Quick Add</h2><span>Ek tap mein entry</span></div><div class="actions quick-actions"><button class="quick-btn" onclick="openForm('income')"><span>💰</span>Income</button><button class="quick-btn" onclick="openForm('expense')"><span>🛍️</span>Expense</button><button class="quick-btn" onclick="openForm('receive')"><span>🤝</span>Udhaar Lena</button><button class="quick-btn" onclick="openForm('pay')"><span>📤</span>Udhaar Dena</button></div>
-<div class="tabs"><button class="tab active" data-tab="transactions" onclick="setTab('transactions')"><span>⌂</span>Home</button><button class="tab" data-tab="customers" onclick="setTab('customers')"><span>⇄</span>Hisab</button><button class="tab" data-tab="reports" onclick="setTab('reports')"><span>▤</span>Report</button><button class="tab" data-tab="backup" onclick="setTab('backup')"><span>💰</span>Backup</button></div>
-<section id="transactionsView" class="panel"><div class="section-title"><h2>Recent Transactions</h2><button class="btn small light" onclick="openForm('income')">Sab dekhein</button></div><div class="filters"><input id="search" placeholder="Naam, note ya amount search karein" oninput="renderTransactions()"><select id="typeFilter" onchange="renderTransactions()"><option value="all">Sabhi types</option><option value="income">Income</option><option value="expense">Expense</option><option value="receive">Udhaar lena</option><option value="pay">Udhaar dena</option></select><select id="statusFilter" onchange="renderTransactions()"><option value="all">Sabhi status</option><option value="pending">Pending</option><option value="paid">Paid</option></select></div><div id="txList" class="list"></div></section>
-<section id="customersView" class="panel hide"><div class="section-title"><h2>Customer-wise hisaab</h2><button class="btn small" onclick="openForm('receive')">＋ Entry</button></div><p class="muted" style="font-size:13px;margin-top:0">Customer ke naam par tap karke uska poora hisaab dekhein.</p><div id="customerList" class="customer-list"></div></section>
-<section id="reportsView" class="panel hide"><div class="section-title"><h2>Reports</h2><button class="btn small light" onclick="if(window.AndroidApp){window.AndroidApp.printPage()}else{window.print()}">Print / PDF</button></div><div id="reportContent"><p class="muted">Reports yahan show hongi.</p></div></section>
-<section id="backupView" class="panel hide"><div class="section-title"><h2>Backup & restore</h2></div><div class="notice">Abhi data isi device par save hota hai. Phone/browser ka data clear karne se pehle backup download kar lein. Google cloud sync abhi connected nahi hai.</div><div class="backup-row"><button class="btn" onclick="exportJSON()">Download backup (JSON)</button><button class="btn secondary" onclick="exportCSV()">Export Excel/CSV</button><button class="btn light" onclick="document.getElementById('restoreFile').click()">Restore backup</button><input id="restoreFile" class="hide" type="file" accept=".json,application/json" onchange="restoreJSON(event)"></div><div class="summary-row"><span>Saved entries</span><b id="entryCount">0</b></div><div class="summary-row"><span>Storage</span><b>Is device par</b></div></section>
-<div class="foot">Mera Hisab Pro · Version 1.0 · Aapka data abhi isi browser mein save hota hai.</div>
+
+<section class="grid">
+  <div class="stat"><div class="label">Aaj ki income</div><div class="value income" id="todayIncome">₹0</div></div>
+  <div class="stat"><div class="label">Aaj ka kharcha</div><div class="value expense" id="todayExpense">₹0</div></div>
+  <div class="stat"><div class="label">Mujhe lene hain</div><div class="value due" id="receivable">₹0</div></div>
+  <div class="stat"><div class="label">Mujhe dene hain</div><div class="value due" id="payable">₹0</div></div>
+</section>
+
+<div class="quick-head"><h2>Quick Add</h2><span class="muted">Ek tap mein entry</span></div>
+<div class="quick-actions">
+  <button class="quick-btn" onclick="openForm('income')"><span>💰</span>Income</button>
+  <button class="quick-btn" onclick="openForm('expense')"><span>🛍️</span>Kharcha</button>
+  <button class="quick-btn" onclick="openForm('receive')"><span>🤝</span>Udhaar lena</button>
+  <button class="quick-btn" onclick="openForm('pay')"><span>📤</span>Udhaar dena</button>
 </div>
-<div id="modal" class="modal" onclick="if(event.target===this)closeForm()"><div class="modal-box"><div class="modal-head"><h2 id="formTitle">New entry</h2><button class="close" onclick="closeForm()">×</button></div><form id="entryForm" onsubmit="saveEntry(event)"><input type="hidden" id="entryId"><div class="field"><label>Entry type</label><select id="fType" required onchange="updateFormLabels()"><option value="income">Income</option><option value="expense">Expense</option><option value="receive">Udhaar lena (mujhe milna hai)</option><option value="pay">Udhaar dena (mujhe dena hai)</option></select></div><div class="form-grid"><div class="field"><label id="nameLabel">Naam / customer</label><input id="fName" placeholder="Jaise: Rahul" maxlength="100"></div><div class="field"><label>Amount (₹)</label><input id="fAmount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div><div class="field"><label>Date</label><input id="fDate" type="date" required></div><div class="field" id="dueWrap"><label>Due date (optional)</label><input id="fDue" type="date"></div><div class="field full"><label>Note / details</label><textarea id="fNote" rows="2" placeholder="Kis cheez ka hisaab?" maxlength="500"></textarea></div><div class="field full" id="statusWrap"><label>Payment status</label><select id="fStatus"><option value="pending">Pending</option><option value="paid">Paid / Complete</option></select></div></div><div class="actions" style="margin-top:6px;margin-bottom:0"><button class="btn" type="submit">Save entry</button><button class="btn light" type="button" onclick="closeForm()">Cancel</button></div></form></div></div>
-<div id="detailModal" class="modal" onclick="if(event.target===this)closeDetail()"><div class="modal-box"><div class="modal-head"><h2 id="detailTitle">Customer</h2><button class="close" onclick="closeDetail()">×</button></div><div id="detailContent"></div></div></div><div id="toast" class="toast"></div>
+
+<nav class="tabs">
+  <button class="tab active" data-tab="transactions" onclick="setTab('transactions')"><span>⌂</span>Home</button>
+  <button class="tab" data-tab="customers" onclick="setTab('customers')"><span>⇄</span>Hisab</button>
+  <button class="tab" data-tab="reports" onclick="setTab('reports')"><span>▤</span>Report</button>
+  <button class="tab" data-tab="backup" onclick="setTab('backup')"><span>💾</span>Backup</button>
+</nav>
+
+<section id="transactionsView" class="panel">
+  <div class="section-title"><h2>Transactions</h2><button class="btn small" onclick="openForm('income')">＋ Add</button></div>
+  <div class="filters">
+    <input id="search" placeholder="Naam, note ya amount search" oninput="renderTransactions()">
+    <select id="typeFilter" onchange="renderTransactions()">
+      <option value="all">Sabhi types</option><option value="income">Income</option>
+      <option value="expense">Kharcha</option><option value="receive">Udhaar lena</option>
+      <option value="pay">Udhaar dena</option>
+    </select>
+    <select id="statusFilter" onchange="renderTransactions()">
+      <option value="all">Sabhi status</option><option value="pending">Pending</option><option value="paid">Paid</option>
+    </select>
+  </div>
+  <div id="txList" class="list"></div>
+</section>
+
+<section id="customersView" class="panel hide">
+  <div class="section-title"><h2>Customer-wise hisaab</h2><button class="btn small" onclick="openForm('receive')">＋ Entry</button></div>
+  <div id="customerList" class="customer-list"></div>
+</section>
+
+<section id="reportsView" class="panel hide">
+  <div class="section-title"><h2>Reports</h2><button class="btn small" onclick="window.print()">Print / PDF</button></div>
+  <div id="reportContent"></div>
+</section>
+
+<section id="backupView" class="panel hide">
+  <div class="section-title"><h2>Backup & Restore</h2></div>
+  <div class="notice">Apna data surakshit rakhne ke liye regular backup download karein. App ka data clear karne se entries mit sakti hain.</div>
+  <div class="backup-row">
+    <button class="btn" onclick="exportJSON()">Download Backup</button>
+    <button class="btn secondary" onclick="exportCSV()">Export CSV</button>
+    <button class="btn light" onclick="$('restoreFile').click()">Restore Backup</button>
+    <input id="restoreFile" class="hide" type="file" accept=".json,application/json" onchange="restoreJSON(event)">
+  </div>
+  <div class="summary-row"><span>Saved entries</span><b id="entryCount">0</b></div>
+  <div class="summary-row"><span>Storage</span><b>Is device par</b></div>
+  <button class="btn danger" style="margin-top:14px" onclick="clearAll()">Delete all entries</button>
+</section>
+
+<div class="foot">Mera Hisab Pro · Version 2.0 · Your personal hisaab</div>
+</div>
+
+<div id="modal" class="modal" onclick="if(event.target===this)closeForm()">
+  <div class="modal-box">
+    <div class="modal-head"><h2 id="formTitle">New entry</h2><button class="close" onclick="closeForm()">×</button></div>
+    <form id="entryForm" onsubmit="saveEntry(event)">
+      <input type="hidden" id="entryId">
+      <div class="field"><label>Entry type</label>
+        <select id="fType" onchange="updateFormLabels()">
+          <option value="income">Income</option><option value="expense">Kharcha</option>
+          <option value="receive">Udhaar lena</option><option value="pay">Udhaar dena</option>
+        </select>
+      </div>
+      <div class="form-grid">
+        <div class="field"><label id="nameLabel">Naam / customer</label><input id="fName" maxlength="100" placeholder="Naam likhein"></div>
+        <div class="field"><label>Amount (₹)</label><input id="fAmount" type="number" min="0.01" step="0.01" required placeholder="0"></div>
+        <div class="field"><label>Date</label><input id="fDate" type="date" required></div>
+        <div class="field" id="dueWrap"><label>Due date</label><input id="fDue" type="date"></div>
+        <div class="field full"><label>Note / details</label><textarea id="fNote" rows="2" maxlength="500" placeholder="Entry ki details"></textarea></div>
+        <div class="field full" id="statusWrap"><label>Payment status</label>
+          <select id="fStatus"><option value="pending">Pending</option><option value="paid">Paid / Complete</option></select>
+        </div>
+      </div>
+      <button class="btn" type="submit">Save entry</button>
+      <button class="btn light" type="button" onclick="closeForm()">Cancel</button>
+    </form>
+  </div>
+</div>
+
+<div id="detailModal" class="modal" onclick="if(event.target===this)closeDetail()">
+  <div class="modal-box">
+    <div class="modal-head"><h2 id="detailTitle">Customer</h2><button class="close" onclick="closeDetail()">×</button></div>
+    <div id="detailContent"></div>
+  </div>
+</div>
+<div id="toast" class="toast"></div>
 
 <script>
+'use strict';
+
 const KEY='meraHisabPro_v2';
 let entries=[];
-let currentTab='transactions';
 let toastTimer;
 
 const $=id=>document.getElementById(id);
-const today=()=>{let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`};
+const today=()=>{
+  const d=new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+};
 const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateFmt=s=>s?new Date(s+'T12:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+const sum=(arr,fn)=>arr.reduce((a,x)=>a+fn(x),0);
+const labels={income:'Income',expense:'Kharcha',receive:'Udhaar lena',pay:'Udhaar dena'};
+const icons={income:'💰',expense:'🛍️',receive:'🤝',pay:'📤'};
+
+function toast(msg){
+  $('toast').textContent=msg;
+  $('toast').classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2400);
+}
 
 function load(){
-    try{entries=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(entries))entries=[]}catch{entries=[]}
-    $('todayPill').textContent=dateFmt(today());
-    renderAll();
+  try{
+    const data=JSON.parse(localStorage.getItem(KEY)||'[]');
+    entries=Array.isArray(data)?data:[];
+    entries=entries.filter(e=>e&&typeof e==='object');
+    entries=entries.map(e=>({...e,id:String(e.id||uid()),amount:Number(e.amount)||0}));
+  }catch(e){entries=[]}
+  renderAll();
 }
 
 function persist(){
+  try{
     localStorage.setItem(KEY,JSON.stringify(entries));
     renderAll();
+  }catch(e){toast('Storage full. Pehle backup download karein.')}
 }
 
-function sum(arr,fn){return arr.reduce((a,x)=>a+fn(x),0)}
-
 function renderAll(){
-    const inc=sum(entries.filter(e=>e.type==='income'),e=>+e.amount),
-          exp=sum(entries.filter(e=>e.type==='expense'),e=>+e.amount),
-          rec=sum(entries.filter(e=>e.type==='receive'&&e.status!=='paid'),e=>+e.amount),
-          pay=sum(entries.filter(e=>e.type==='pay'&&e.status!=='paid'),e=>+e.amount),
-          t=today();
-          
-    $('balance').textContent=money(inc-exp);
-    $('heroIncome').textContent=money(inc);
-    $('heroExpense').textContent=money(exp);
-    $('heroDue').textContent=money(rec+pay);
+  const inc=sum(entries.filter(e=>e.type==='income'),e=>e.amount);
+  const exp=sum(entries.filter(e=>e.type==='expense'),e=>e.amount);
+  const rec=sum(entries.filter(e=>e.type==='receive'&&e.status!=='paid'),e=>e.amount);
+  const pay=sum(entries.filter(e=>e.type==='pay'&&e.status!=='paid'),e=>e.amount);
+  const t=today();
+
+  $('balance').textContent=money(inc-exp);
+  $('heroIncome').textContent=money(inc);
+  $('heroExpense').textContent=money(exp);
+  $('heroDue').textContent=money(rec+pay);
+  $('todayIncome').textContent=money(sum(entries.filter(e=>e.type==='income'&&e.date===t),e=>e.amount));
+  $('todayExpense').textContent=money(sum(entries.filter(e=>e.type==='expense'&&e.date===t),e=>e.amount));
+  $('receivable').textContent=money(rec);
+  $('payable').textContent=money(pay);
+  $('entryCount').textContent=entries.length;
+
+  renderTransactions();
+  renderCustomers();
+  renderReports();
+}
+
+function renderTransactions(){
+  const q=($('search').value||'').trim().toLowerCase();
+  const type=$('typeFilter').value;
+  const status=$('statusFilter').value;
+  const filtered=entries.filter(e=>{
+    const mt=type==='all'||e.type===type;
+    const ms=status==='all'||!['receive','pay'].includes(e.type)||e.status===status;
+    const text=[e.name,e.note,e.amount,e.date,labels[e.type]].join(' ').toLowerCase();
+    return mt&&ms&&text.includes(q);
+  }).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+
+  $('txList').innerHTML=filtered.length?filtered.map(e=>{
+    const amountClass=e.type==='income'?'income':e.type==='expense'?'expense':'due';
+    return `<div class="tx">
+      <div class="tx-icon">${icons[e.type]||'₹'}</div>
+      <div class="tx-main">
+        <div class="tx-title">${esc(e.name||labels[e.type]||'Entry')}</div>
+        <div class="tx-meta">${esc(labels[e.type]||'Entry')} · ${dateFmt(e.date)}</div>
+        ${e.note?`<div class="tx-meta">${esc(e.note)}</div>`:''}
+        ${['receive','pay'].includes(e.type)?`<span class="badge ${e.status==='paid'?'paid':'pending'}">${e.status==='paid'?'Paid':'Pending'}</span>`:''}
+        <div class="bottom-actions" style="justify-content:flex-start">
+          <button class="btn small light" onclick="editEntry('${esc(e.id)}')">Edit</button>
+          ${['receive','pay'].includes(e.type)&&e.status!=='paid'?`<button class="btn small secondary" onclick="markPaid('${esc(e.id)}')">Paid</button>`:''}
+          <button class="btn small danger" onclick="deleteEntry('${esc(e.id)}')">Delete</button>
+        </div>
+      </div>
+      <div class="tx-right"><div class="tx-amount ${amountClass}">${money(e.amount)}</div></div>
+    </div>`;
+  }).join(''):'<div class="empty">Koi entry nahi mili. ＋ Add se nayi entry banayein.</div>';
+}
+
+function openForm(type='income',id=''){
+  $('entryForm').reset();
+  $('entryId').value='';
+  $('fDate').value=today();
+  $('fDue').value='';
+  $('fStatus').value='pending';
+  $('fType').value=type;
+  $('formTitle').textContent='New entry';
+  if(id){
+    const e=entries.find(x=>String(x.id)===String(id));
+    if(!e)return;
+    $('entryId').value=e.id;
+    $('fType').value=e.type;
+    $('fName').value=e.name||'';
+    $('fAmount').value=e.amount;
+    $('fDate').value=e.date||today();
+    $('fDue').value=e.dueDate||'';
+    $('fNote').value=e.note||'';
+    $('fStatus').value=e.status||'pending';
+    $('formTitle').textContent='Edit entry';
+  }
+  updateFormLabels();
+  $('modal').classList.add('show');
+}
+
+function closeForm(){$('modal').classList.remove('show')}
+
+function updateFormLabels(){
+  const type=$('fType').value;
+  $('nameLabel').textContent=['receive','pay'].includes(type)?'Customer ka naam':'Naam / category';
+  $('statusWrap').classList.toggle('hide',!['receive','pay'].includes(type));
+  $('dueWrap').classList.toggle('hide',!['receive','pay'].includes(type));
+}
+
+function saveEntry(event){
+  event.preventDefault();
+  const amount=Number($('fAmount').value);
+  if(!Number.isFinite(amount)||amount<=0){toast('Sahi amount likhein');return}
+  const type=$('fType').value;
+  const oldId=$('entryId').value;
+  const item={
+    id:oldId||uid(),
+    type,
+    name:$('fName').value.trim(),
+    amount,
+    date:$('fDate').value||today(),
+    dueDate:$('fDue').value,
+    note:$('fNote').value.trim(),
+    status:['receive','pay'].includes(type)?$('fStatus').value:'paid'
+  };
+  if(oldId){
+    const i=entries.findIndex(e=>String(e.id)===String(oldId));
+    if(i>=0)entries[i]=item;
+    else entries.push(item);
+  }else entries.push(item);
+  persist();
+  closeForm();
+  toast('Entry save ho gayi');
+}
+
+function editEntry(id){openForm('income',id)}
+
+function deleteEntry(id){
+  const e=entries.find(x=>String(x.id)===String(id));
+  if(!e)return;
+  if(!confirm('Is entry ko delete karna hai?'))return;
+  entries=entries.filter(x=>String(x.id)!==String(id));
+  persist();
+  toast('Entry delete ho gayi');
+}
+
+function markPaid(id){
+  const e=entries.find(x=>String(x.id)===String(id));
+  if(!e)return;
+  e.status='paid';
+  persist();
+  toast('Payment complete mark ho gaya');
+}
+
+function setTab(tab){
+  const views={transactions:'transactionsView',customers:'customersView',reports:'reportsView',backup:'backupView'};
     
-    $('todayIncome').textContent=money(sum(entries.filter(e=>e.type==='income'&&e.date===t),e=>+e.amount));
-    $('todayExpense').textContent=money(sum(entries.filter(e=>e.type==='expense'&&e.date===t),e=>+e.amount));
-    $('receivable').textContent=money(rec);
-    $('payable').textContent=money(pay);
-    $('entryCount').textCon
