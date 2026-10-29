@@ -1,448 +1,48 @@
-<!doctype html>
-<html lang="hi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0b1220">
-<title>Mera Hisab Pro</title>
-
-<style>
-:root {
-  --bg:#0b1220; --card:#111d31; --ink:#edf4ff;
-  --muted:#94a3b8; --line:#26354d; --blue:#2488ff;
-  --green:#34d399; --red:#fb7185; --amber:#fbbf24;
-}
-* { box-sizing:border-box }
-body {
-  margin:0; background:var(--bg); color:var(--ink);
-  font:15px/1.5 system-ui,Arial,sans-serif;
-  padding-bottom:85px;
-}
-button,input,select,textarea { font:inherit }
-button { cursor:pointer }
-.app { max-width:900px; margin:auto; padding:16px }
-.top { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:8px 0 20px }
-.brand { display:flex; align-items:center; gap:12px }
-.logo {
-  width:55px;height:55px;border-radius:17px;
-  display:grid;place-items:center;
-  background:linear-gradient(135deg,#278cff,#27d3b5);
-  color:#071322;font-size:30px;font-weight:900;
-}
-h1 { font-size:21px;margin:0 }
-.brand p { margin:2px 0 0;color:var(--muted);font-size:12px }
-.btn {
-  border:0;border-radius:12px;padding:11px 14px;
-  background:var(--blue);color:white;font-weight:700;
-}
-.btn.secondary { background:#153e47;color:#83e4d3 }
-.btn.light { background:#17243a;color:var(--ink);border:1px solid var(--line) }
-.btn.danger { background:#49202b;color:#ffb6c1 }
-.btn.small { padding:6px 9px;font-size:12px }
-.hero {
-  padding:23px;border-radius:23px;margin-bottom:15px;
-  background:linear-gradient(125deg,#173c5b,#164052,#10483f);
-  border:1px solid #2b6072;
-}
-.hero small { color:#c0d8e8 }
-.total { font-size:36px;font-weight:850;margin:8px 0 15px;overflow-wrap:anywhere }
-.hero-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:10px }
-.hero-stat span { display:block;color:#c2d3e3;font-size:12px }
-.hero-stat b { font-size:16px }
-.grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;margin-bottom:22px }
-.stat,.panel {
-  padding:16px;border-radius:19px;
-  background:linear-gradient(145deg,#15233a,#111c2e);
-  border:1px solid var(--line);margin-bottom:14px;
-}
-.label { color:var(--muted);font-size:12px }
-.value { font-size:21px;font-weight:800;margin-top:5px;overflow-wrap:anywhere }
-.income { color:var(--green) }
-.expense { color:var(--red) }
-.due { color:var(--amber) }
-.quick-head,.section-title { display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px }
-.quick-head h2,.section-title h2 { margin:0;font-size:18px }
-.muted { color:var(--muted) }
-.quick-actions { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:22px }
-.quick-btn {
-  min-width:0;min-height:100px;padding:10px 3px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
-  color:var(--ink);background:#142239;border:1px solid #293850;
-  border-radius:17px;font-size:12px;
-}
-.quick-btn span { font-size:25px }
-.tabs {
-  position:fixed;z-index:8;bottom:0;left:0;right:0;
-  display:grid;grid-template-columns:repeat(4,1fr);gap:4px;
-  padding:9px 10px calc(9px + env(safe-area-inset-bottom));
-  background:#0b1220f5;border-top:1px solid var(--line);
-}
-.tab {
-  border:0;border-radius:12px;background:transparent;color:var(--muted);
-  padding:8px 2px;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:3px;
-}
-.tab span { font-size:21px }
-.tab.active { background:#1a2d49;color:#8dbbff;font-weight:800 }
-.filters { display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px }
-.filters input { grid-column:1/-1 }
-input,select,textarea {
-  width:100%;min-width:0;padding:11px;
-  color:var(--ink);background:#0c1627;
-  border:1px solid #2b3b55;border-radius:10px;
-}
-.field { display:flex;flex-direction:column;gap:5px;margin-bottom:12px }
-.field label { color:#a7b7ce;font-size:12px;font-weight:700 }
-.form-grid { display:grid;grid-template-columns:1fr 1fr;gap:0 10px }
-.full { grid-column:1/-1 }
-.list { display:flex;flex-direction:column;gap:9px }
-.tx {
-  display:flex;align-items:flex-start;gap:10px;
-  padding:12px;border:1px solid #293850;border-radius:14px;background:#142239;
-}
-.tx-icon { font-size:21px;background:#1d334b;border-radius:12px;padding:7px }
-.tx-main { flex:1;min-width:0 }
-.tx-title { font-weight:750;overflow-wrap:anywhere }
-.tx-meta { font-size:12px;color:var(--muted);overflow-wrap:anywhere }
-.tx-right { text-align:right;max-width:45%;overflow-wrap:anywhere }
-.tx-amount { font-weight:850 }
-.bottom-actions { display:flex;justify-content:flex-end;flex-wrap:wrap;gap:5px;margin-top:7px }
-.badge { display:inline-block;padding:3px 7px;border-radius:20px;font-size:11px;margin-top:4px }
-.pending { background:#493a20;color:#fbd38d }
-.paid { background:#123d33;color:#7ce9bf }
-.empty { text-align:center;padding:24px 10px;color:var(--muted) }
-.customer-list { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px }
-.customer { border:1px solid var(--line);border-radius:13px;padding:13px;background:#142239 }
-.customer h3 { margin:0 0 5px;font-size:15px;overflow-wrap:anywhere }
-.summary-row { display:flex;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line) }
-.notice { background:#38291c;color:#f9c995;padding:12px;border-radius:12px;font-size:13px;margin-bottom:12px }
-.backup-row { display:flex;flex-wrap:wrap;gap:8px }
-.hide { display:none!important }
-.modal { position:fixed;inset:0;z-index:20;display:none;align-items:flex-end;justify-content:center;background:#0009 }
-.modal.show { display:flex }
-.modal-box { width:100%;max-width:600px;max-height:92vh;overflow:auto;background:#111d31;padding:19px;border-radius:22px 22px 0 0 }
-.modal-head { display:flex;justify-content:space-between;align-items:center;margin-bottom:15px }
-.modal-head h2 { font-size:19px;margin:0 }
-.close { background:#24334a;color:white;border:0;border-radius:50%;width:36px;height:36px;font-size:21px }
-.toast { position:fixed;z-index:40;bottom:90px;left:50%;transform:translateX(-50%);display:none;background:white;color:#111;padding:12px 17px;border-radius:12px;max-width:90% }
-.toast.show { display:block }
-.foot { text-align:center;color:var(--muted);font-size:11px;padding:18px }
-@media(min-width:700px) {
-  .modal { align-items:center;padding:20px }
-  .modal-box { border-radius:20px }
-  .tabs { position:static;border:1px solid var(--line);border-radius:15px;margin-bottom:15px }
-  .app { padding:23px }
-}
-@media(max-width:380px) {
-  .app { padding:11px }
-  .quick-actions { gap:5px }
-  .quick-btn { font-size:11px }
-  .total { font-size:31px }
-  .tx { gap:7px;padding:9px }
-}
-@media print {
-  body { background:white;color:black;padding:0 }
-  .tabs,.quick-actions,.quick-head,.btn,.filters,.bottom-actions,.foot { display:none!important }
-  .panel,.stat,.customer,.tx { background:white;color:black;break-inside:avoid }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Mera Hisab Pro</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-<div class="app">
-<header class="top">
-  <div class="brand">
-    <div class="logo">₹</div>
-    <div><h1>Mera Hisab Pro</h1><p>Apne paise ka poora hisaab</p></div>
-  </div>
-  <button class="btn light" onclick="setTab('backup')">⚙</button>
-</header>
+    <div class="app-container">
+        <header class="top-header">
+            <div class="logo-icon">₹</div>
+            <div class="app-title">
+                <h1>Mera Hisab Pro</h1>
+                <p>Apne paise ka poora hisaab</p>
+            </div>
+        </header>
 
-<section class="hero">
-  <small>Aapka Net Balance</small>
-  <div class="total" id="balance">₹0</div>
-  <div class="hero-grid">
-    <div class="hero-stat"><span>Aamdani</span><b id="heroIncome">₹0</b></div>
-    <div class="hero-stat"><span>Kharcha</span><b id="heroExpense">₹0</b></div>
-    <div class="hero-stat"><span>Pending Udhaar</span><b id="heroDue">₹0</b></div>
-  </div>
-</section>
+        <section class="balance-card">
+            <p>Aapka Net Balance</p>
+            <h2>₹ 0</h2>
+            <div class="stats-row">
+                <div class="stat-item"><p>Aamdani</p><span>₹ 0</span></div>
+                <div class="stat-item"><p>Kharcha</p><span>₹ 0</span></div>
+                <div class="stat-item"><p>Pending Udhaar</p><span>₹ 0</span></div>
+            </div>
+        </section>
 
-<section class="grid">
-  <div class="stat"><div class="label">Aaj ki income</div><div class="value income" id="todayIncome">₹0</div></div>
-  <div class="stat"><div class="label">Aaj ka kharcha</div><div class="value expense" id="todayExpense">₹0</div></div>
-  <div class="stat"><div class="label">Mujhe lene hain</div><div class="value due" id="receivable">₹0</div></div>
-  <div class="stat"><div class="label">Mujhe dene hain</div><div class="value due" id="payable">₹0</div></div>
-</section>
-
-<div class="quick-head"><h2>Quick Add</h2><span class="muted">Ek tap mein entry</span></div>
-<div class="quick-actions">
-  <button class="quick-btn" onclick="openForm('income')"><span>💰</span>Income</button>
-  <button class="quick-btn" onclick="openForm('expense')"><span>🛍️</span>Kharcha</button>
-  <button class="quick-btn" onclick="openForm('receive')"><span>🤝</span>Udhaar lena</button>
-  <button class="quick-btn" onclick="openForm('pay')"><span>📤</span>Udhaar dena</button>
-</div>
-
-<nav class="tabs">
-  <button class="tab active" data-tab="transactions" onclick="setTab('transactions')"><span>⌂</span>Home</button>
-  <button class="tab" data-tab="customers" onclick="setTab('customers')"><span>⇄</span>Hisab</button>
-  <button class="tab" data-tab="reports" onclick="setTab('reports')"><span>▤</span>Report</button>
-  <button class="tab" data-tab="backup" onclick="setTab('backup')"><span>💾</span>Backup</button>
-</nav>
-
-<section id="transactionsView" class="panel">
-  <div class="section-title"><h2>Transactions</h2><button class="btn small" onclick="openForm('income')">＋ Add</button></div>
-  <div class="filters">
-    <input id="search" placeholder="Naam, note ya amount search" oninput="renderTransactions()">
-    <select id="typeFilter" onchange="renderTransactions()">
-      <option value="all">Sabhi types</option><option value="income">Income</option>
-      <option value="expense">Kharcha</option><option value="receive">Udhaar lena</option>
-      <option value="pay">Udhaar dena</option>
-    </select>
-    <select id="statusFilter" onchange="renderTransactions()">
-      <option value="all">Sabhi status</option><option value="pending">Pending</option><option value="paid">Paid</option>
-    </select>
-  </div>
-  <div id="txList" class="list"></div>
-</section>
-
-<section id="customersView" class="panel hide">
-  <div class="section-title"><h2>Customer-wise hisaab</h2><button class="btn small" onclick="openForm('receive')">＋ Entry</button></div>
-  <div id="customerList" class="customer-list"></div>
-</section>
-
-<section id="reportsView" class="panel hide">
-  <div class="section-title"><h2>Reports</h2><button class="btn small" onclick="window.print()">Print / PDF</button></div>
-  <div id="reportContent"></div>
-</section>
-
-<section id="backupView" class="panel hide">
-  <div class="section-title"><h2>Backup & Restore</h2></div>
-  <div class="notice">Apna data surakshit rakhne ke liye regular backup download karein. App ka data clear karne se entries mit sakti hain.</div>
-  <div class="backup-row">
-    <button class="btn" onclick="exportJSON()">Download Backup</button>
-    <button class="btn secondary" onclick="exportCSV()">Export CSV</button>
-    <button class="btn light" onclick="$('restoreFile').click()">Restore Backup</button>
-    <input id="restoreFile" class="hide" type="file" accept=".json,application/json" onchange="restoreJSON(event)">
-  </div>
-  <div class="summary-row"><span>Saved entries</span><b id="entryCount">0</b></div>
-  <div class="summary-row"><span>Storage</span><b>Is device par</b></div>
-  <button class="btn danger" style="margin-top:14px" onclick="clearAll()">Delete all entries</button>
-</section>
-
-<div class="foot">Mera Hisab Pro · Version 2.0 · Your personal hisaab</div>
-</div>
-
-<div id="modal" class="modal" onclick="if(event.target===this)closeForm()">
-  <div class="modal-box">
-    <div class="modal-head"><h2 id="formTitle">New entry</h2><button class="close" onclick="closeForm()">×</button></div>
-    <form id="entryForm" onsubmit="saveEntry(event)">
-      <input type="hidden" id="entryId">
-      <div class="field"><label>Entry type</label>
-        <select id="fType" onchange="updateFormLabels()">
-          <option value="income">Income</option><option value="expense">Kharcha</option>
-          <option value="receive">Udhaar lena</option><option value="pay">Udhaar dena</option>
-        </select>
-      </div>
-      <div class="form-grid">
-        <div class="field"><label id="nameLabel">Naam / customer</label><input id="fName" maxlength="100" placeholder="Naam likhein"></div>
-        <div class="field"><label>Amount (₹)</label><input id="fAmount" type="number" min="0.01" step="0.01" required placeholder="0"></div>
-        <div class="field"><label>Date</label><input id="fDate" type="date" required></div>
-        <div class="field" id="dueWrap"><label>Due date</label><input id="fDue" type="date"></div>
-        <div class="field full"><label>Note / details</label><textarea id="fNote" rows="2" maxlength="500" placeholder="Entry ki details"></textarea></div>
-        <div class="field full" id="statusWrap"><label>Payment status</label>
-          <select id="fStatus"><option value="pending">Pending</option><option value="paid">Paid / Complete</option></select>
+        <!-- Quick Add Section -->
+        <h3 class="section-title">Quick Add <span class="subtitle">Ek tap mein entry</span></h3>
+        <div class="quick-add-grid">
+            <div class="action-btn">💰<br>Income</div>
+            <div class="action-btn">🛍️<br>Kharcha</div>
+            <div class="action-btn">🤝<br>Udhaar lena</div>
+            <div class="action-btn">📩<br>Udhaar dena</div>
         </div>
-      </div>
-      <button class="btn" type="submit">Save entry</button>
-      <button class="btn light" type="button" onclick="closeForm()">Cancel</button>
-    </form>
-  </div>
-</div>
+    </div>
 
-<div id="detailModal" class="modal" onclick="if(event.target===this)closeDetail()">
-  <div class="modal-box">
-    <div class="modal-head"><h2 id="detailTitle">Customer</h2><button class="close" onclick="closeDetail()">×</button></div>
-    <div id="detailContent"></div>
-  </div>
-</div>
-<div id="toast" class="toast"></div>
-
-<script>
-'use strict';
-
-const KEY='meraHisabPro_v2';
-let entries=[];
-let toastTimer;
-
-const $=id=>document.getElementById(id);
-const today=()=>{
-  const d=new Date();
-  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-};
-const money=n=>'₹'+Number(n||0).toLocaleString('en-IN',{minimumFractionDigits:0,maximumFractionDigits:2});
-const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const dateFmt=s=>s?new Date(s+'T12:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—';
-const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,8);
-const sum=(arr,fn)=>arr.reduce((a,x)=>a+fn(x),0);
-const labels={income:'Income',expense:'Kharcha',receive:'Udhaar lena',pay:'Udhaar dena'};
-const icons={income:'💰',expense:'🛍️',receive:'🤝',pay:'📤'};
-
-function toast(msg){
-  $('toast').textContent=msg;
-  $('toast').classList.add('show');
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>$('toast').classList.remove('show'),2400);
-}
-
-function load(){
-  try{
-    const data=JSON.parse(localStorage.getItem(KEY)||'[]');
-    entries=Array.isArray(data)?data:[];
-    entries=entries.filter(e=>e&&typeof e==='object');
-    entries=entries.map(e=>({...e,id:String(e.id||uid()),amount:Number(e.amount)||0}));
-  }catch(e){entries=[]}
-  renderAll();
-}
-
-function persist(){
-  try{
-    localStorage.setItem(KEY,JSON.stringify(entries));
-    renderAll();
-  }catch(e){toast('Storage full. Pehle backup download karein.')}
-}
-
-function renderAll(){
-  const inc=sum(entries.filter(e=>e.type==='income'),e=>e.amount);
-  const exp=sum(entries.filter(e=>e.type==='expense'),e=>e.amount);
-  const rec=sum(entries.filter(e=>e.type==='receive'&&e.status!=='paid'),e=>e.amount);
-  const pay=sum(entries.filter(e=>e.type==='pay'&&e.status!=='paid'),e=>e.amount);
-  const t=today();
-
-  $('balance').textContent=money(inc-exp);
-  $('heroIncome').textContent=money(inc);
-  $('heroExpense').textContent=money(exp);
-  $('heroDue').textContent=money(rec+pay);
-  $('todayIncome').textContent=money(sum(entries.filter(e=>e.type==='income'&&e.date===t),e=>e.amount));
-  $('todayExpense').textContent=money(sum(entries.filter(e=>e.type==='expense'&&e.date===t),e=>e.amount));
-  $('receivable').textContent=money(rec);
-  $('payable').textContent=money(pay);
-  $('entryCount').textContent=entries.length;
-
-  renderTransactions();
-  renderCustomers();
-  renderReports();
-}
-
-function renderTransactions(){
-  const q=($('search').value||'').trim().toLowerCase();
-  const type=$('typeFilter').value;
-  const status=$('statusFilter').value;
-  const filtered=entries.filter(e=>{
-    const mt=type==='all'||e.type===type;
-    const ms=status==='all'||!['receive','pay'].includes(e.type)||e.status===status;
-    const text=[e.name,e.note,e.amount,e.date,labels[e.type]].join(' ').toLowerCase();
-    return mt&&ms&&text.includes(q);
-  }).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
-
-  $('txList').innerHTML=filtered.length?filtered.map(e=>{
-    const amountClass=e.type==='income'?'income':e.type==='expense'?'expense':'due';
-    return `<div class="tx">
-      <div class="tx-icon">${icons[e.type]||'₹'}</div>
-      <div class="tx-main">
-        <div class="tx-title">${esc(e.name||labels[e.type]||'Entry')}</div>
-        <div class="tx-meta">${esc(labels[e.type]||'Entry')} · ${dateFmt(e.date)}</div>
-        ${e.note?`<div class="tx-meta">${esc(e.note)}</div>`:''}
-        ${['receive','pay'].includes(e.type)?`<span class="badge ${e.status==='paid'?'paid':'pending'}">${e.status==='paid'?'Paid':'Pending'}</span>`:''}
-        <div class="bottom-actions" style="justify-content:flex-start">
-          <button class="btn small light" onclick="editEntry('${esc(e.id)}')">Edit</button>
-          ${['receive','pay'].includes(e.type)&&e.status!=='paid'?`<button class="btn small secondary" onclick="markPaid('${esc(e.id)}')">Paid</button>`:''}
-          <button class="btn small danger" onclick="deleteEntry('${esc(e.id)}')">Delete</button>
-        </div>
-      </div>
-      <div class="tx-right"><div class="tx-amount ${amountClass}">${money(e.amount)}</div></div>
-    </div>`;
-  }).join(''):'<div class="empty">Koi entry nahi mili. ＋ Add se nayi entry banayein.</div>';
-}
-
-function openForm(type='income',id=''){
-  $('entryForm').reset();
-  $('entryId').value='';
-  $('fDate').value=today();
-  $('fDue').value='';
-  $('fStatus').value='pending';
-  $('fType').value=type;
-  $('formTitle').textContent='New entry';
-  if(id){
-    const e=entries.find(x=>String(x.id)===String(id));
-    if(!e)return;
-    $('entryId').value=e.id;
-    $('fType').value=e.type;
-    $('fName').value=e.name||'';
-    $('fAmount').value=e.amount;
-    $('fDate').value=e.date||today();
-    $('fDue').value=e.dueDate||'';
-    $('fNote').value=e.note||'';
-    $('fStatus').value=e.status||'pending';
-    $('formTitle').textContent='Edit entry';
-  }
-  updateFormLabels();
-  $('modal').classList.add('show');
-}
-
-function closeForm(){$('modal').classList.remove('show')}
-
-function updateFormLabels(){
-  const type=$('fType').value;
-  $('nameLabel').textContent=['receive','pay'].includes(type)?'Customer ka naam':'Naam / category';
-  $('statusWrap').classList.toggle('hide',!['receive','pay'].includes(type));
-  $('dueWrap').classList.toggle('hide',!['receive','pay'].includes(type));
-}
-
-function saveEntry(event){
-  event.preventDefault();
-  const amount=Number($('fAmount').value);
-  if(!Number.isFinite(amount)||amount<=0){toast('Sahi amount likhein');return}
-  const type=$('fType').value;
-  const oldId=$('entryId').value;
-  const item={
-    id:oldId||uid(),
-    type,
-    name:$('fName').value.trim(),
-    amount,
-    date:$('fDate').value||today(),
-    dueDate:$('fDue').value,
-    note:$('fNote').value.trim(),
-    status:['receive','pay'].includes(type)?$('fStatus').value:'paid'
-  };
-  if(oldId){
-    const i=entries.findIndex(e=>String(e.id)===String(oldId));
-    if(i>=0)entries[i]=item;
-    else entries.push(item);
-  }else entries.push(item);
-  persist();
-  closeForm();
-  toast('Entry save ho gayi');
-}
-
-function editEntry(id){openForm('income',id)}
-
-function deleteEntry(id){
-  const e=entries.find(x=>String(x.id)===String(id));
-  if(!e)return;
-  if(!confirm('Is entry ko delete karna hai?'))return;
-  entries=entries.filter(x=>String(x.id)!==String(id));
-  persist();
-  toast('Entry delete ho gayi');
-}
-
-function markPaid(id){
-  const e=entries.find(x=>String(x.id)===String(id));
-  if(!e)return;
-  e.status='paid';
-  persist();
-  toast('Payment complete mark ho gaya');
-}
-
-function setTab(tab){
-  const views={transactions:'transactionsView',customers:'customersView',reports:'reportsView',backup:'backupView'};
-    
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <div class="nav-item active">🏠<br>Home</div>
+        <div class="nav-item">📊<br>Hisab</div>
+        <div class="nav-item">📈<br>Report</div>
+        <div class="nav-item">☁️<br>Backup</div>
+    </nav>
+    <script src="script.js"></script>
+</body>
+</html>
